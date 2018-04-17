@@ -1,0 +1,23 @@
+1> Install Node.js globally
+
+2> Install Ethereum TestRPC for testing the smart contract
+ npm install -g ethereumjs-testrpc
+ 
+3> > Running TestRPC
+> testrpc
+
+4> Go to project folder and run this command. This will install all the dependencies.
+> npm init
+
+5> > npm install ethereum/web3.js --save
+
+6> After intallation of metamask and building of index.html is done : Install Lite server in the project folder
+npm install lite-server --save-dev
+
+7> Go to your project folder and check for package.json
+and then on "scripts" key put one more value as:
+"dev": "lite-server"
+Save it  
+Then go to the terminal and run the command:
+npm run dev
+
