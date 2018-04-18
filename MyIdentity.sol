@@ -7,12 +7,13 @@ contract MyIdentity{
         address profile_owner_Address;
         bytes32 fullName;
         bytes32 dob;
-        uint age;
+        bytes32 age;
         bytes32 gender;
-        uint mobileNo;
+        bytes32 mobileNo;
         bytes32 mailingAddress;
         bytes32 permanentAddress;
         bytes32 emailId;
+        bytes32 Uid;
     }
     
     
@@ -24,12 +25,14 @@ contract MyIdentity{
     
      event ChangeNotification(address indexed sender, bytes32 notificationMsg);
     
-     event ProfileSetting(address profile_owner_Address, bytes32 fullName, bytes32 dob, uint age, bytes32 gender, uint mobileNo, bytes32 mailingAddress, bytes32 permanentAddress, bytes32 emailId);
+     event ProfileSetting(address profile_owner_Address, bytes32 fullName, bytes32 dob, bytes32 age, bytes32 gender, bytes32 mobileNo, bytes32 mailingAddress, bytes32 permanentAddress, bytes32 emailId, bytes32 Uid);
+     
+     event ProfileGetting(address profile_owner_Address, bytes32 fullName, bytes32 dob, bytes32 age, bytes32 gender, bytes32 mobileNo, bytes32 mailingAddress, bytes32 permanentAddress, bytes32 emailId);
     
-    function sendEvent(bytes32 _notification) internal returns(bool) {
+    /*function sendEvent(bytes32 _notification) internal returns(bool) {
         ChangeNotification(msg.sender, _notification);
         return true;
-    }
+    }*/
     
    /* function setProfile1
     (
@@ -77,12 +80,13 @@ contract MyIdentity{
     (
         bytes32 _name, 
         bytes32 _dob, 
-        uint _age,
+        bytes32 _age,
         bytes32 _gender,
-        uint _mobile,
+        bytes32 _mobile,
         bytes32 _mailing,
         bytes32 _permanent,
-        bytes32 _email
+        bytes32 _email,
+        bytes32 _Uid
         ) {
         profiles[msg.sender].profile_owner_Address = msg.sender;
         profiles[msg.sender].fullName = _name;
@@ -93,18 +97,37 @@ contract MyIdentity{
         profiles[msg.sender].mailingAddress = _mailing;
         profiles[msg.sender].permanentAddress = _permanent;
         profiles[msg.sender].emailId = _email;
+        profiles[msg.sender].Uid = _Uid;
         
-        ProfileSetting(msg.sender, _name, _dob, _age, _gender, _mobile, _mailing, _permanent, _email);
+        ProfileSetting(msg.sender, _name, _dob, _age, _gender, _mobile, _mailing, _permanent, _email, _Uid);
         
     }
+    
+    /*function getProfile() public constant {
+       
+            address _ProfilAdddr = profiles[msg.sender].profile_owner_Address;
+            bytes32 _name = profiles[msg.sender].fullName;
+            bytes32 _dob = profiles[msg.sender].dob;
+            bytes32 _age = profiles[msg.sender].age;
+            bytes32 _gender = profiles[msg.sender].gender;
+            bytes32 _mobile = profiles[msg.sender].mobileNo;
+            bytes32 _mailing = profiles[msg.sender].mailingAddress;
+            bytes32 _permanent = profiles[msg.sender].permanentAddress;
+            bytes32 _email = profiles[msg.sender].emailId;
+        
+            
+            //ProfileGetting(_ProfilAdddr, _name, _dob, _age, _gender, _mobile, _mailing, _permanent, _email);
+            
+    }*/
     
     function getProfile() public constant returns
     (   address,
         bytes32, 
         bytes32, 
-        uint,
         bytes32,
-        uint,
+        bytes32,
+        bytes32,
+        bytes32,
         bytes32,
         bytes32,
         bytes32
@@ -119,7 +142,8 @@ contract MyIdentity{
             profiles[msg.sender].mobileNo,
             profiles[msg.sender].mailingAddress,
             profiles[msg.sender].permanentAddress,
-            profiles[msg.sender].emailId
+            profiles[msg.sender].emailId,
+            profiles[msg.sender].Uid
             );
     }
     
@@ -136,12 +160,12 @@ contract MyIdentity{
         if(_send[7]){ receivedProfile[_to][lastProfileIndex[_to]].emailId = profiles[msg.sender].emailId; }
         
         lastProfileIndex[_to]++;
-        sendEvent("Profile sent!");
+        //sendEvent("Profile sent!");
     }
     
     function readReceivedProfile2() constant returns
     (   address,
-        uint,
+        bytes32,
         bytes32,
         bytes32,
         bytes32
@@ -158,7 +182,7 @@ contract MyIdentity{
     (   
         bytes32,
         bytes32,
-        uint,
+        bytes32,
         bytes32
     ) {
       return(
