@@ -17,6 +17,36 @@
 
   <div class="jumbotron">
 	  <h2 id="confirmation"></h2>
+	  <div class="modal fade" id="mySmartInfoModal" role="dialog">
+			<div class="modal-dialog">
+			
+			  <!-- Modal content-->
+			  <div class="modal-content">
+				<div class="modal-header">
+				  <button type="button" class="close" data-dismiss="modal">&times;</button>
+				  <h4 class="modal-title">Saved Profile</h4>
+				</div>
+				<div class="modal-body">
+				<ul class="list-group">
+					<li class="list-group-item">Address: <span id="addrMod" ></span></li>
+					<li class="list-group-item">Name: <span id="nameMod" ></span></li> 
+					<li class="list-group-item">DOB: <span id="dobMod"></span></li> 
+					<li class="list-group-item">Age: <span id="ageMod"></span></li>
+					<li class="list-group-item">Gender: <span id="genMod"></span></li> 
+					<li class="list-group-item">Mobile: <span id="mobMod"></span></li> 
+					<li class="list-group-item">Mailing: <span id="mailMod"></span></li>
+					<li class="list-group-item">Permanent Address: <span id="permMod"></span></li> 
+					<li class="list-group-item">Email: <span id="emailMod"></span></li> 
+					<li class="list-group-item">ID: <span id="idMod"></span></li> 
+				</ul>
+				</div>
+				<div class="modal-footer">
+				  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			  </div>
+			  
+			</div>
+		  </div>
 	  <span id="smartTransHash"></span>
       <img id="loader" src = "https://loading.io/spinners/double-ring/lg.double-ring-spineer.gif">
       
@@ -24,20 +54,20 @@
         <div class="form-group">
             <label class="control-label col-sm-2" for="name">Name</label>
             <div class="col-sm-10">
-              <input type="name" class="form-control" id="name" placeholder="Enter name" name="name">
+              <input type="text" class="form-control" id="name" placeholder="Enter name" name="name">
             </div>
         </div>
         <div class="form-group">
           <label class="control-label col-sm-2" for="email">Email</label>
           <div class="col-sm-10">
-            <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+            <input type="text" class="form-control" id="email" placeholder="Enter email" name="email">
           </div>
         </div>
 
         <div class="form-group">
             <label class="control-label col-sm-2" for="age">Age</label>
             <div class="col-sm-10">
-              <input type="age" class="form-control" id="age" placeholder="Enter age" name="age">
+              <input type="number" class="form-control" id="age" placeholder="Enter age" name="age">
             </div>
         </div>
         
@@ -80,18 +110,31 @@
           <label class="control-label col-sm-2" for="gender">Gender</label>
           
           <label class="radio-inline">
-             <input type="radio" name="gender" id="gen"> M
+             <input type="radio" name="gender" value="Male" id="gen"> M
           </label>
           <label class="radio-inline">
-             <input type="radio" name="gender" id="gen"> F
+             <input type="radio" name="gender" value="Female" id="gen"> F
           </label>
       </div>
 
         
-        <div class="form-group">        
+        <!--<div class="form-group">        
           <div class="col-sm-offset-2 col-sm-10">
             <button id="setProfileBtn" type="submit" class="btn btn-default">Submit information</button>
-          </div>
+		  </div>-->
+		  
+		  <div class="btn-group btn-group-justified">
+			<div class="btn-group">
+			  <button id="setProfileBtn" type="button" class="btn btn-primary">Save Profile</button>
+			</div>
+			<div class="btn-group">
+			  <!--<button id="getProfileBtn" type="button" class="btn btn-primary">View information</button>-->
+			  <button id="getProfileBtn" type="button" class="btn btn-info " data-toggle="modal" data-target="#mySmartInfoModal">View Profile</button>
+			</div>
+			<div class="btn-group">
+			  <button id="sendInfo" type="button" class="btn btn-primary">Send Profile</button>
+			</div>
+		  </div>
         </div>
       
       </div>
@@ -120,18 +163,71 @@
 		"anonymous": false,
 		"inputs": [
 			{
-				"indexed": true,
-				"name": "sender",
+				"indexed": false,
+				"name": "profile_owner_Address",
 				"type": "address"
 			},
 			{
 				"indexed": false,
-				"name": "notificationMsg",
+				"name": "fullName",
+				"type": "bytes32"
+			},
+			{
+				"indexed": false,
+				"name": "dob",
+				"type": "bytes32"
+			},
+			{
+				"indexed": false,
+				"name": "age",
+				"type": "bytes32"
+			},
+			{
+				"indexed": false,
+				"name": "gender",
+				"type": "bytes32"
+			},
+			{
+				"indexed": false,
+				"name": "mobileNo",
+				"type": "bytes32"
+			},
+			{
+				"indexed": false,
+				"name": "mailingAddress",
+				"type": "bytes32"
+			},
+			{
+				"indexed": false,
+				"name": "permanentAddress",
+				"type": "bytes32"
+			},
+			{
+				"indexed": false,
+				"name": "emailId",
 				"type": "bytes32"
 			}
 		],
-		"name": "ChangeNotification",
+		"name": "ProfileGetting",
 		"type": "event"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_to",
+				"type": "address"
+			},
+			{
+				"name": "_send",
+				"type": "bool[]"
+			}
+		],
+		"name": "sendProfile",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
 	},
 	{
 		"anonymous": false,
@@ -154,7 +250,7 @@
 			{
 				"indexed": false,
 				"name": "age",
-				"type": "uint256"
+				"type": "bytes32"
 			},
 			{
 				"indexed": false,
@@ -164,7 +260,7 @@
 			{
 				"indexed": false,
 				"name": "mobileNo",
-				"type": "uint256"
+				"type": "bytes32"
 			},
 			{
 				"indexed": false,
@@ -186,22 +282,21 @@
 		"type": "event"
 	},
 	{
-		"constant": false,
+		"anonymous": false,
 		"inputs": [
 			{
-				"name": "_to",
+				"indexed": true,
+				"name": "sender",
 				"type": "address"
 			},
 			{
-				"name": "_send",
-				"type": "bool[]"
+				"indexed": false,
+				"name": "notificationMsg",
+				"type": "bytes32"
 			}
 		],
-		"name": "sendProfile",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
+		"name": "ChangeNotification",
+		"type": "event"
 	},
 	{
 		"constant": false,
@@ -216,7 +311,7 @@
 			},
 			{
 				"name": "_age",
-				"type": "uint256"
+				"type": "bytes32"
 			},
 			{
 				"name": "_gender",
@@ -224,7 +319,7 @@
 			},
 			{
 				"name": "_mobile",
-				"type": "uint256"
+				"type": "bytes32"
 			},
 			{
 				"name": "_mailing",
@@ -264,7 +359,7 @@
 			},
 			{
 				"name": "",
-				"type": "uint256"
+				"type": "bytes32"
 			},
 			{
 				"name": "",
@@ -272,7 +367,7 @@
 			},
 			{
 				"name": "",
-				"type": "uint256"
+				"type": "bytes32"
 			},
 			{
 				"name": "",
@@ -334,7 +429,7 @@
 			},
 			{
 				"name": "age",
-				"type": "uint256"
+				"type": "bytes32"
 			},
 			{
 				"name": "gender",
@@ -342,7 +437,7 @@
 			},
 			{
 				"name": "mobileNo",
-				"type": "uint256"
+				"type": "bytes32"
 			},
 			{
 				"name": "mailingAddress",
@@ -376,7 +471,7 @@
 			},
 			{
 				"name": "",
-				"type": "uint256"
+				"type": "bytes32"
 			},
 			{
 				"name": "",
@@ -398,7 +493,7 @@
 			},
 			{
 				"name": "",
-				"type": "uint256"
+				"type": "bytes32"
 			},
 			{
 				"name": "",
@@ -445,7 +540,7 @@
 			},
 			{
 				"name": "age",
-				"type": "uint256"
+				"type": "bytes32"
 			},
 			{
 				"name": "gender",
@@ -453,7 +548,7 @@
 			},
 			{
 				"name": "mobileNo",
-				"type": "uint256"
+				"type": "bytes32"
 			},
 			{
 				"name": "mailingAddress",
@@ -474,34 +569,82 @@
 	}
 ]);
 
-  var smartID = smartIDContract.at('0x4f06992ff0763314f32fa0cc5bb3964514a32e36');
-  console.log(smartID);
+  var smartID = smartIDContract.at('0x5eb4f7a36e9b09ddf3b36956c96654da0ecd68b7');
+  //console.log(smartID);
 
-var settingProfileEvent  = smartID.ProfileSetting({}, 'latest');
+var settingProfileEvent  = smartID.ProfileSetting({}, 'latest'); //Event for setting profile
 
+var gettingProfileEvent  = smartID.ProfileGetting({}, 'latest'); //Event for getting profile
+
+//Watching the setting event
 settingProfileEvent.watch(function(error, result){
     if(!error){
-		console.log("Inside event");
+		//console.log("Inside event");
        if (result.blockHash != $("#smartTransHash").html())
                $("#loader").hide();
        $("#smartTransHash").html('Block hash: ' + result.blockHash);
-       $("#confirmation").html(web3.toAscii(result.args.fullName) + ' ' + web3.toAscii(result.args.dob) + '  ' + result.args.mobileNo);
+       //$("#name").html(web3.toAscii(result.args.fullName) + ' ' + web3.toAscii(result.args.dob) + '  ' + result.args.mobileNo);
     }
     else{
        $('#loader').hide();
        console.log(error);
-	   console.log("Inside event but error");
+	   //console.log("Inside event but error");
     }
 
 });
 
+//Watching the getting event
+gettingProfileEvent.watch(function(error, result){
+	console.log("Atleast inside event");
+    if(!error){
+		console.log("Inside Getting event");
+       $("#loader").hide();
+       $("#addr").html(web3.toAscii(result.args.fullName));
+    }
+    else{
+       $('#loader').hide();
+       console.log(error);
+	   //console.log("Inside event but error");
+    }
+
+});
+
+// Getting the profile information
+$("#getProfileBtn").click(function() {
+    console.log("hello from button getter");
+
+		// Encrypting Function call over here and return values will be passed to setProfile
+	 smartID.getProfile((err, result) => {
+          if(err){
+            console.log(error);
+           $('#loader').hide();
+          }
+		  else{
+			$("#addrMod").html(result[0]);
+			$("#nameMod").html(web3.toAscii(result[1]));
+			$("#dobMod").html(web3.toAscii(result[2]));
+			$("#ageMod").html(web3.toAscii(result[3]));
+			$("#genMod").html(web3.toAscii(result[4]));
+			$("#mobMod").html(web3.toAscii(result[5]));
+			$("#mailMod").html(web3.toAscii(result[6]));
+			$("#permMod").html(web3.toAscii(result[7]));
+			$("#emailMod").html(web3.toAscii(result[8]));
+			$("#idMOd").html(result[0]);
+			
+		  }
+      });
+
+	//$('#loader').show();
+  });
 
 
   $("#setProfileBtn").click(function() {
-    console.log("hello from button");
+    console.log("hello from button setter");
+
+	
 
 		// Encrypting Function call over here and return values will be passed to setProfile
-	 smartID.setProfile($("#name").val(), $("#dob").val(), $("#age").val(),$("#gen").val(), $("#mob").val(), $("#ipaddr").val(),$("#praddr").val(), $("#email").val(), (err, res) => {
+	 smartID.setProfile($("#name").val(), $("#dob").val(), $("#age").val(),$('input[name=gender]:checked').val(), $("#mob").val(), $("#ipaddr").val(),$("#praddr").val(), $("#email").val(), (err, res) => {
           if(err){
             console.log(error);
            $('#loader').hide();
@@ -528,7 +671,13 @@ settingProfileEvent.watch(function(error, result){
 	});*/
 	$('#loader').show();
   });
-
+  function bin2string(array){
+	var result = "";
+	for(var i = 0; i < array.length; ++i){
+		result+= (String.fromCharCode(array[i]));
+	}
+	return result;
+}
 </script>
 
 </body>
