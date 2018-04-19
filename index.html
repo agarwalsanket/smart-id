@@ -5,8 +5,8 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="main.css">
         <script src="./node_modules/web3/dist/web3.min.js"></script>
       </head>
@@ -16,8 +16,42 @@
         <h3 class="text-center">Enter your information: </h3>  
 
   <div class="jumbotron">
-	  <!--<h2 id="confirmation"></h2>-->
-	  
+
+	<!-- Modal content for validating password-->
+		<div class="modal fade" id="viewingInfoPassValModal" role="dialog">
+				<div class="modal-dialog modal-lg">
+				
+				  
+				  <div class="modal-content">
+					<div class="modal-header">
+					  <button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<div class="modal-body" >
+							<p class = "text-danger" id="ViewProfilePassValModal"></p>
+							<label class="control-label col-sm-2" for="ViewingInfoValPwd">Password:</label>
+						<div class="col-sm-10">
+							<input type="password" class="form-control" id="ViewingInfoValPwd" placeholder="Enter the same password that you entered while saving your profile" required>
+						</div>
+						<p class="text-info" align="center">If you want to view your saved profile, only then press view</p>
+						
+					</div>
+					<div class="modal-footer">
+							<div class="btn-group btn-group-justified">
+									<div class="btn-group">
+									  	<button id="viewFromModalBtn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#mySmartInfoModal">View Profile</button>
+									</div>
+									<div class="btn-group">
+									  	<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+									</div>
+							</div>
+					  
+					</div>
+				  </div>
+				  
+				</div>
+			  </div>
+	
+	  <!-- Modal content for viewing the information -->
 	  <div class="modal fade" id="mySmartInfoModal" role="dialog">
 			<div class="modal-dialog">
 			
@@ -32,7 +66,7 @@
 					<li class="list-group-item">Address: <span id="addrMod" ></span></li>
 					<li class="list-group-item">Name: <span id="nameMod" ></span></li> 
 					<li class="list-group-item">DOB: <span id="dobMod"></span></li> 
-					<li class="list-group-item">Age: <span id="ageMod"></span></li>
+					<li class="list-group-item">Public key: <textarea class="form-control" rows="5" id="retPubKey"></textarea></li>
 					<li class="list-group-item">Gender: <span id="genMod"></span></li> 
 					<li class="list-group-item">Mobile: <span id="mobMod"></span></li> 
 					<li class="list-group-item">Mailing: <span id="mailMod"></span></li>
@@ -136,19 +170,18 @@
             <div class="col-sm-10">
               <input type="text" class="form-control" id="name" placeholder="Enter name" name="name">
             </div>
-        </div>
+		</div>
+		<div class="form-group">
+				<label class="control-label col-sm-2" for="PublicKey">Public key</label>
+			<div class="col-sm-10">
+				<textarea class="form-control" rows="3" id="PublicKey" placeholder="First generate your private key using terminal commands 'openssl rsa -pubout -in rsa_1024_priv.pem -out rsa_1024_pub.pem'. Then use 'openssl rsa -pubout -in rsa_1024_priv.pem -out rsa_1024_pub.pem' for private key. Use cat 'name_of_key_file' to retrieve the keys." ></textarea>
+			</div>
+		</div>
         <div class="form-group">
           <label class="control-label col-sm-2" for="email">Email</label>
           <div class="col-sm-10">
             <input type="text" class="form-control" id="email" placeholder="Enter email" name="email">
           </div>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label col-sm-2" for="age">Age</label>
-            <div class="col-sm-10">
-              <input type="number" class="form-control" id="age" placeholder="Enter age" name="age">
-            </div>
         </div>
         
         <div class="form-group">
@@ -195,27 +228,44 @@
           <label class="radio-inline">
              <input type="radio" name="gender" value="Female" id="gen"> F
           </label>
-      </div>
+	  </div>
+	  
+	  <div class="form-group">
+			<label class="control-label col-sm-2" for="PwdEntry">Password:</label>
+		<div class="col-sm-10">
+			<input type="password" class="form-control" id="PwdEntry" placeholder="Enter a password" required>
+		</div>
+	 </div>
+
+	 <div class="form-group">
+			<label class="control-label col-sm-2" for="ConfirmPwd">Confirm Password:</label>
+		<div class="col-sm-10">
+			<input type="password" class="form-control" id="ConfirmPwd" placeholder="Confirm your password" required>
+		</div>
+	 </div>
 
         
         <!--<div class="form-group">        
           <div class="col-sm-offset-2 col-sm-10">
             <button id="setProfileBtn" type="submit" class="btn btn-default">Submit information</button>
 		  </div>-->
-		  
+		  <h3 class = "text-danger" align="center" id="PasswordValidationMsg"></h3>
 		  <div class="btn-group btn-group-justified">
 			<div class="btn-group">
 			  <button id="setProfileBtn" type="button" class="btn btn-primary">Save Profile</button>
 			</div>
 			<div class="btn-group">
 			  <!--<button id="getProfileBtn" type="button" class="btn btn-primary">View information</button>-->
-			  <button id="getProfileBtn" type="button" class="btn btn-info " data-toggle="modal" data-target="#mySmartInfoModal">View Profile</button>
+			  <button id="getProfileBtn" type="button" class="btn btn-info " data-toggle="modal" data-target="#viewingInfoPassValModal">View Profile</button>
 			</div>
+			
 			<div class="btn-group">
 			  <!--<button id="sendInfo" type="button" class="btn btn-primary">Send Profile</button>-->
 			  <button id="sendInfo" type="button" class="btn btn-primary" data-toggle="modal" data-target="#sendingInfoModal">Send Profile</button>
 			</div>
 		</div>
+
+	
 
 		</div>
       </div>
@@ -231,6 +281,8 @@
 <!-- Contract scripting starts here -->
 
 <script>
+
+	
   if (typeof web3 !== 'undefined') {
       web3 = new Web3(web3.currentProvider);
   } else {
@@ -330,11 +382,6 @@
 			},
 			{
 				"indexed": false,
-				"name": "age",
-				"type": "bytes32"
-			},
-			{
-				"indexed": false,
 				"name": "gender",
 				"type": "bytes32"
 			},
@@ -396,10 +443,6 @@
 				"type": "bytes32"
 			},
 			{
-				"name": "_age",
-				"type": "bytes32"
-			},
-			{
 				"name": "_gender",
 				"type": "bytes32"
 			},
@@ -422,12 +465,35 @@
 			{
 				"name": "_Uid",
 				"type": "bytes32"
+			},
+			{
+				"name": "_publicKey",
+				"type": "string"
 			}
 		],
 		"name": "setProfile",
 		"outputs": [],
 		"payable": false,
 		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "addrPublicKeymapping",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -473,7 +539,26 @@
 			},
 			{
 				"name": "",
-				"type": "bytes32"
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "accountAddress",
+				"type": "address"
+			}
+		],
+		"name": "getPublicKey",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
 			}
 		],
 		"payable": false,
@@ -522,10 +607,6 @@
 				"type": "bytes32"
 			},
 			{
-				"name": "age",
-				"type": "bytes32"
-			},
-			{
 				"name": "gender",
 				"type": "bytes32"
 			},
@@ -559,10 +640,6 @@
 		"inputs": [],
 		"name": "readReceivedProfile1",
 		"outputs": [
-			{
-				"name": "",
-				"type": "bytes32"
-			},
 			{
 				"name": "",
 				"type": "bytes32"
@@ -637,10 +714,6 @@
 				"type": "bytes32"
 			},
 			{
-				"name": "age",
-				"type": "bytes32"
-			},
-			{
 				"name": "gender",
 				"type": "bytes32"
 			},
@@ -671,7 +744,7 @@
 	}
 ]);
 
-  var smartID = smartIDContract.at('0xe6763ca39022baf3c1a06b1ba350f26bebdb5328');
+  var smartID = smartIDContract.at('0x4f6dd882c1ef5d616e28c52622339858b23f0b4f');
   //console.log(smartID);
 
 var settingProfileEvent  = smartID.ProfileSetting({}, 'latest'); //Event for setting profile
@@ -696,7 +769,7 @@ settingProfileEvent.watch(function(error, result){
 });
 
 //Watching the getting event
-gettingProfileEvent.watch(function(error, result){
+ gettingProfileEvent.watch(function(error, result){
 	console.log("Atleast inside event");
     if(!error){
 		console.log("Inside Getting event");
@@ -712,11 +785,14 @@ gettingProfileEvent.watch(function(error, result){
 });
 
 // Getting the profile information
-$("#getProfileBtn").click(function() {
+$("#viewFromModalBtn").click(function() {
     console.log("hello from button getter");
-
-		// Encrypting Function call over here and return values will be passed to setProfile
-	 smartID.getProfile((err, result) => {
+	console.log("mom");
+	console.log($("#ViewingInfoValPwd").val());
+	
+	var passwordForDecrypting = $("#ViewingInfoValPwd").val();
+// Encrypting Function call over here and return values will be passed to setProfile
+smartID.getProfile((err, result) => {
           if(err){
             console.log(error);
            $('#loader').hide();
@@ -725,20 +801,21 @@ $("#getProfileBtn").click(function() {
 			$("#addrMod").html(result[0]);
 			$("#nameMod").html(web3.toAscii(result[1]));
 			$("#dobMod").html(web3.toAscii(result[2]));
-			$("#ageMod").html(web3.toAscii(result[3]));
-			$("#genMod").html(web3.toAscii(result[4]));
-			$("#mobMod").html(web3.toAscii(result[5]));
-			$("#mailMod").html(web3.toAscii(result[6]));
-			$("#permMod").html(web3.toAscii(result[7]));
-			$("#emailMod").html(web3.toAscii(result[8]));
-			$("#UniqueIdMod").html(web3.toAscii(result[9]));
-			
-			console.log(web3.toAscii(result[9]));
+			$("#genMod").html(web3.toAscii(result[3]));
+			$("#mobMod").html(web3.toAscii(result[4]));
+			$("#mailMod").html(web3.toAscii(result[5]));
+			$("#permMod").html(web3.toAscii(result[6]));
+			$("#emailMod").html(web3.toAscii(result[7]));
+			$("#UniqueIdMod").html(web3.toAscii(result[8]));
+			$("#retPubKey").html(result[9]);
+		
 		  }
       });
 
+	
 	//$('#loader').show();
   });
+
 
 
 
@@ -751,17 +828,24 @@ $("#sendInfo").click(function() {
   });
 
   $("#setProfileBtn").click(function() {
-    console.log($("#Uid").val());
-	console.log($("#PuAddr").val());
 	console.log("hello from button setter");
-
-		// Encrypting Function call over here and return values will be passed to setProfile
-	 smartID.setProfile($("#name").val(), $("#dob").val(), $("#age").val(),$('input[name=gender]:checked').val(), $("#mob").val(), $("#ipaddr").val(),$("#praddr").val(), $("#email").val(),$("#Uid").val(), (err, res) => {
+	var password = $("#PwdEntry").val();
+	var confirm_password = $("#ConfirmPwd").val();
+	if(password != confirm_password){
+		$("#PasswordValidationMsg").html("Passwords do not match!");
+	}else{
+			// Encrypting Function call over here and return values will be passed to setProfile
+			smartID.setProfile($("#name").val(), $("#dob").val(), $('input[name=gender]:checked').val(), $("#mob").val(), $("#ipaddr").val(),$("#praddr").val(), $("#email").val(),$("#Uid").val(),$("#PublicKey").val(), (err, res) => {
           if(err){
             console.log(error);
            $('#loader').hide();
+		   $('#PasswordValidationMsg').hide();
           }
+		  $('#loader').show();
+		  $('#PasswordValidationMsg').hide();
       });
+	}
+	
     //smartID.setProfile($("#name").val(), $("#dob").val(), $("#age").val(),$("#gen").val(), $("#mob").val(), $("#ipaddr").val(),$("#praddr").val(), $("#email").val());
     /*smartID.setProfile1($("#name").val(), $("#dob").val(),(err, res) => {
 		if(err){
@@ -781,7 +865,7 @@ $("#sendInfo").click(function() {
            $('#loader').hide();
           }
 	});*/
-	$('#loader').show();
+	
   });
   function bin2string(array){
 	var result = "";
