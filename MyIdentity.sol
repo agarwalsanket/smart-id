@@ -5,9 +5,9 @@ contract MyIdentity{
     
     struct profileAttributes{
         address profile_owner_Address;
-        bytes32 fullName;
+        bytes32 fullName;  // Kee bytes32
         bytes32 dob;
-        bytes32 gender; 
+        bytes32 gender;   // Kee bytes32
         bytes32 mobileNo; // Encryption needed
         bytes32 mailingAddress;
         bytes32 permanentAddress;
@@ -161,16 +161,19 @@ contract MyIdentity{
     function sendProfile(address _to, bool[] _send){
         if(_send[0]){ receivedProfile[_to][lastProfileIndex[_to]].fullName = profiles[msg.sender].fullName; }
         if(_send[1]){ receivedProfile[_to][lastProfileIndex[_to]].dob = profiles[msg.sender].dob; }
-        if(_send[3]){ receivedProfile[_to][lastProfileIndex[_to]].gender = profiles[msg.sender].gender; }
-        if(_send[4]){ receivedProfile[_to][lastProfileIndex[_to]].mobileNo = profiles[msg.sender].mobileNo; }
-        if(_send[5]){ receivedProfile[_to][lastProfileIndex[_to]].mailingAddress = profiles[msg.sender].mailingAddress; }
-        if(_send[6]){ receivedProfile[_to][lastProfileIndex[_to]].permanentAddress = profiles[msg.sender].permanentAddress; }
-        if(_send[7]){ receivedProfile[_to][lastProfileIndex[_to]].emailId = profiles[msg.sender].emailId; }
+        if(_send[2]){ receivedProfile[_to][lastProfileIndex[_to]].gender = profiles[msg.sender].gender; }
+        if(_send[3]){ receivedProfile[_to][lastProfileIndex[_to]].mobileNo = profiles[msg.sender].mobileNo; }
+        if(_send[4]){ receivedProfile[_to][lastProfileIndex[_to]].mailingAddress = profiles[msg.sender].mailingAddress; }
+        if(_send[5]){ receivedProfile[_to][lastProfileIndex[_to]].permanentAddress = profiles[msg.sender].permanentAddress; }
+        if(_send[6]){ receivedProfile[_to][lastProfileIndex[_to]].emailId = profiles[msg.sender].emailId; }
+        if(_send[7]){ receivedProfile[_to][lastProfileIndex[_to]].Uid = profiles[msg.sender].Uid; }
+        
         
         lastProfileIndex[_to]++;
         //sendEvent("Profile sent!");
     }
     
+    /*  
     function readReceivedProfile2() constant returns
     (   address,
         bytes32,
@@ -197,6 +200,29 @@ contract MyIdentity{
           receivedProfile[msg.sender][lastProfileIndex[msg.sender]-1].dob,
           receivedProfile[msg.sender][lastProfileIndex[msg.sender]-1].gender
           ); 
-    }
+    }*/
+    
+    function readReceivedProfile() constant returns
+    (   address,
+        bytes32,
+        bytes32,
+        bytes32,
+        bytes32,
+        bytes32,
+        bytes32,
+        bytes32,
+        bytes32
+        ) {
+            return(msg.sender,
+                    receivedProfile[msg.sender][lastProfileIndex[msg.sender]-1].fullName,
+                    receivedProfile[msg.sender][lastProfileIndex[msg.sender]-1].dob,
+                    receivedProfile[msg.sender][lastProfileIndex[msg.sender]-1].gender,
+                    receivedProfile[msg.sender][lastProfileIndex[msg.sender]-1].mobileNo,
+                    receivedProfile[msg.sender][lastProfileIndex[msg.sender]-1].mailingAddress,
+                    receivedProfile[msg.sender][lastProfileIndex[msg.sender]-1].permanentAddress,
+                    receivedProfile[msg.sender][lastProfileIndex[msg.sender]-1].emailId,
+                    receivedProfile[msg.sender][lastProfileIndex[msg.sender]-1].Uid
+                    );
+        }
     
 }

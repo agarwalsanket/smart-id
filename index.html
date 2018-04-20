@@ -17,6 +17,42 @@
 
   <div class="jumbotron">
 
+
+	<!-- Modal content for received profile-->
+
+	<div class="modal fade" id="recievedProfileInfoModal" role="dialog">
+			<div class="modal-dialog">
+			
+			  <!-- Modal content-->
+			  <div class="modal-content">
+				<div class="modal-header">
+				  <button type="button" class="close" data-dismiss="modal">&times;</button>
+				  <h4 class="modal-title">Recieved Profile</h4>
+				</div>
+				<div class="modal-body">
+				<ul class="list-group">
+					<li class="list-group-item">Address: <span id="addrRecievedMod" ></span></li>
+					<li class="list-group-item">Name: <span id="nameRecievedMod" ></span></li> 
+					<li class="list-group-item">DOB: <span id="dobRecievedMod"></span></li> 
+					<li class="list-group-item">Public key: <textarea class="form-control" rows="5" id="retRecievedPubKey"></textarea></li>
+					<li class="list-group-item">Gender: <span id="genRecievedMod"></span></li> 
+					<li class="list-group-item">Mobile: <span id="mobRecievedMod"></span></li> 
+					<li class="list-group-item">Mailing: <span id="mailRecievedMod"></span></li>
+					<li class="list-group-item">Permanent Address: <span id="permRecievedMod"></span></li> 
+					<li class="list-group-item">Email: <span id="emailRecievedMod"></span></li> 
+					<li class="list-group-item">Unique ID: <span id="UniqueIdRecievedMod"></span></li> 
+					<!--<li class="list-group-item">Unique ID: <span id="idMod"></span></li> -->
+					
+				</ul>
+				</div>
+				<div class="modal-footer">
+				  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			  </div>
+			  
+			</div>
+		  </div>
+
 	<!-- Modal content for validating password-->
 		<div class="modal fade" id="viewingInfoPassValModal" role="dialog">
 				<div class="modal-dialog modal-lg">
@@ -158,7 +194,7 @@
 		</div>-->
 		<div class="form-group">
 				<!--<button id="sendInfo" type="button" class="btn btn-primary">Send Profile</button>-->
-				<button id="receiveInfo" type="button" class="btn btn-info" >View Received Profile</button>
+				<button id="receiveInfo" type="button" class="btn btn-info" data-toggle="modal" data-target="#recievedProfileInfoModal">View Received Profile</button>
 		  </div>
 
         <div class="form-group">
@@ -634,33 +670,27 @@
 	{
 		"constant": true,
 		"inputs": [],
-		"name": "readReceivedProfile1",
-		"outputs": [
-			{
-				"name": "",
-				"type": "bytes32"
-			},
-			{
-				"name": "",
-				"type": "bytes32"
-			},
-			{
-				"name": "",
-				"type": "bytes32"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [],
-		"name": "readReceivedProfile2",
+		"name": "readReceivedProfile",
 		"outputs": [
 			{
 				"name": "",
 				"type": "address"
+			},
+			{
+				"name": "",
+				"type": "bytes32"
+			},
+			{
+				"name": "",
+				"type": "bytes32"
+			},
+			{
+				"name": "",
+				"type": "bytes32"
+			},
+			{
+				"name": "",
+				"type": "bytes32"
 			},
 			{
 				"name": "",
@@ -740,7 +770,7 @@
 	}
 ]);
 
-  var smartID = smartIDContract.at('0x4f6dd882c1ef5d616e28c52622339858b23f0b4f');
+  var smartID = smartIDContract.at('0x88d7adeaf7879a706cd1c91dde015af0f690759d');
   //console.log(smartID);
 
 var settingProfileEvent  = smartID.ProfileSetting({}, 'latest'); //Event for setting profile
@@ -780,11 +810,46 @@ settingProfileEvent.watch(function(error, result){
 
 });
 
+
+// Receiving Profile info
+// Sending the profile information
+$("#receiveInfo").click(function() {
+    console.log("hello from button recieved");
+
+	var recipientAddress = $("#receiverAddr").val();
+
+
+	smartID.readReceivedProfile((err, result) => {
+          if(err){
+            console.log(error);
+           $('#loader').hide();
+          }
+		  else{
+			$("#addrRecievedMod").html(result[0]);
+			$("#nameRecievedMod").html(web3.toAscii(result[1]));
+			$("#dobRecievedMod").html(web3.toAscii(result[2]));
+			$("#genRecievedMod").html(web3.toAscii(result[3]));
+			$("#mobRecievedMod").html(web3.toAscii(result[4]));
+			$("#mailRecievedMod").html(web3.toAscii(result[5]));
+			$("#permRecievedMod").html(web3.toAscii(result[6]));
+			$("#emailRecievedMod").html(web3.toAscii(result[7]));
+			$("#UniqueIdRecievedMod").html(web3.toAscii(result[8]));
+			
+		
+		  }
+      });
+
+
+
+	//$('#loader').show();
+  });
+
 // Sending the profile information
 $("#SendProfileBtn").click(function() {
     console.log("hello from button sender");
 
 	var recipientAddress = $("#receiverAddr").val();
+	console.log(recipientAddress);
 
 // Encrypting Function call over here and return values will be passed to setProfile
 	var listOfInfoToBeSend = [];
@@ -792,6 +857,10 @@ $("#SendProfileBtn").click(function() {
 	$.each($("input[name='specificInfo']:checked"), function(){            
 		listOfInfoToBeSend.push($(this).val());
             });
+	var obj;
+			for(obj in listOfInfoToBeSend){
+				console.log(obj);
+			}
 			var info;
 			for(info in listOfInfoToBeSend){
 				if(info == "nameSendProf") listOfBoolInfoToBeSend[0] = true;
@@ -804,9 +873,16 @@ $("#SendProfileBtn").click(function() {
 				if(info == "UidSendProf") listOfBoolInfoToBeSend[7] = true;
 
 			}
+			var i;
+			console.log(typeof(true));
+			for(i in listOfBoolInfoToBeSend){
+				console.log(i);
+			}
 
-			smartID.sendProfile(recipientAddress, listOfBoolInfoToBeSend, (err, result) => {
+			smartID.sendProfile(recipientAddress, [true,true,true,true,true,true,true,true,true], (err, result) => {
 				if(err){
+					console.log("inside sending error");
+
             console.log(error);
            $('#loader').hide();}  
 			});
