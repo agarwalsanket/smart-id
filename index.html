@@ -98,35 +98,35 @@
 					<div class="modal-body">
 						<div class="checkbox">
 						   <label class="checkbox-inline">
-								<input type="checkbox" value="nameSendProf">Name
+								<input type="checkbox" value="nameSendProf" name="specificInfo">Name
 							</label>
 							<label class="checkbox-inline">
-								<input type="checkbox" value="dobSendProf">DOB
+								<input type="checkbox" value="dobSendProf" name="specificInfo">DOB
 							</label>
 							<label class="checkbox-inline">
-								<input type="checkbox" value="ageSendProf">Age
-							</label>
-						</div>
-						<div class="checkbox">
-							<label class="checkbox-inline">
-								<input type="checkbox" value="genSendProf">Gender
-							</label>
-							<label class="checkbox-inline">
-								<input type="checkbox" value="mobSendProf">Mobile
-							</label>
-							<label class="checkbox-inline">
-								<input type="checkbox" value="mailSendProf">Mailing
+								<input type="checkbox" value="ageSendProf" name="specificInfo">Age
 							</label>
 						</div>
 						<div class="checkbox">
 							<label class="checkbox-inline">
-								<input type="checkbox" value="perSendProf">Permanent Address
+								<input type="checkbox" value="genSendProf" name="specificInfo">Gender
 							</label>
 							<label class="checkbox-inline">
-								<input type="checkbox" value="emailSendProf">Email
+								<input type="checkbox" value="mobSendProf" name="specificInfo">Mobile
 							</label>
 							<label class="checkbox-inline">
-								<input type="checkbox" value="UidSendProf">Unique ID
+								<input type="checkbox" value="mailSendProf" name="specificInfo">Mailing
+							</label>
+						</div>
+						<div class="checkbox">
+							<label class="checkbox-inline">
+								<input type="checkbox" value="perSendProf" name="specificInfo">Permanent Address
+							</label>
+							<label class="checkbox-inline">
+								<input type="checkbox" value="emailSendProf" name="specificInfo">Email
+							</label>
+							<label class="checkbox-inline">
+								<input type="checkbox" value="UidSendProf" name="specificInfo">Unique ID
 							</label>
 						</div>
 
@@ -144,10 +144,6 @@
 				  
 				</div>
 			  </div>
-
-
-
-
 
 	  <span id="smartTransHash"></span>
       <img id="loader" src = "https://loading.io/spinners/double-ring/lg.double-ring-spineer.gif">
@@ -784,6 +780,42 @@ settingProfileEvent.watch(function(error, result){
 
 });
 
+// Sending the profile information
+$("#SendProfileBtn").click(function() {
+    console.log("hello from button sender");
+
+	var recipientAddress = $("#receiverAddr").val();
+
+// Encrypting Function call over here and return values will be passed to setProfile
+	var listOfInfoToBeSend = [];
+	var listOfBoolInfoToBeSend = new Array(false,false,false,false,false,false,false,false,false);
+	$.each($("input[name='specificInfo']:checked"), function(){            
+		listOfInfoToBeSend.push($(this).val());
+            });
+			var info;
+			for(info in listOfInfoToBeSend){
+				if(info == "nameSendProf") listOfBoolInfoToBeSend[0] = true;
+				if(info == "dobSendProf") listOfBoolInfoToBeSend[1] = true;
+				if(info == "genSendProf") listOfBoolInfoToBeSend[2] = true;
+				if(info == "mobSendProf") listOfBoolInfoToBeSend[3] = true;
+				if(info == "mailSendProf") listOfBoolInfoToBeSend[4] = true;
+				if(info == "perSendProf") listOfBoolInfoToBeSend[5] = true;
+				if(info == "emailSendProf") listOfBoolInfoToBeSend[6] = true;
+				if(info == "UidSendProf") listOfBoolInfoToBeSend[7] = true;
+
+			}
+
+			smartID.sendProfile(recipientAddress, listOfBoolInfoToBeSend, (err, result) => {
+				if(err){
+            console.log(error);
+           $('#loader').hide();}  
+			});
+
+			console.log("Sending is done");
+
+	//$('#loader').show();
+  });
+
 // Getting the profile information
 $("#viewFromModalBtn").click(function() {
     console.log("hello from button getter");
@@ -813,17 +845,6 @@ smartID.getProfile((err, result) => {
       });
 
 	
-	//$('#loader').show();
-  });
-
-
-
-
-$("#sendInfo").click(function() {
-    console.log("hello from button sender");
-
-	
-
 	//$('#loader').show();
   });
 
