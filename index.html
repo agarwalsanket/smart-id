@@ -42,7 +42,6 @@
 					<li class="list-group-item">Email: <span id="emailRecievedMod"></span></li> 
 					<li class="list-group-item">Unique ID: <span id="UniqueIdRecievedMod"></span></li> 
 					<!--<li class="list-group-item">Unique ID: <span id="idMod"></span></li> -->
-					
 				</ul>
 				</div>
 				<div class="modal-footer">
@@ -56,8 +55,6 @@
 	<!-- Modal content for validating password-->
 		<div class="modal fade" id="viewingInfoPassValModal" role="dialog">
 				<div class="modal-dialog modal-lg">
-				
-				  
 				  <div class="modal-content">
 					<div class="modal-header">
 					  <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -120,8 +117,8 @@
 			  
 			</div>
 		  </div>
-		  <!-- Logic for sending information-->
 
+		  <!-- Logic for sending information-->
 		  <div class="modal fade" id="sendingInfoModal" role="dialog">
 				<div class="modal-dialog">
 				
@@ -134,42 +131,47 @@
 					<div class="modal-body">
 						<div class="checkbox">
 						   <label class="checkbox-inline">
-								<input type="checkbox" value="nameSendProf" name="specificInfo">Name
+								<input type="checkbox" value="nameSendProf" id="specificInfoName">Name
 							</label>
 							<label class="checkbox-inline">
-								<input type="checkbox" value="dobSendProf" name="specificInfo">DOB
+								<input type="checkbox" value="dobSendProf" id="specificInfoDob">DOB
 							</label>
 							<label class="checkbox-inline">
-								<input type="checkbox" value="ageSendProf" name="specificInfo">Age
+								<input type="checkbox" value="ageSendProf" id="specificInfoAge">Age
 							</label>
 						</div>
 						<div class="checkbox">
 							<label class="checkbox-inline">
-								<input type="checkbox" value="genSendProf" name="specificInfo">Gender
+								<input type="checkbox" value="genSendProf" id="specificInfoGen">Gender
 							</label>
 							<label class="checkbox-inline">
-								<input type="checkbox" value="mobSendProf" name="specificInfo">Mobile
+								<input type="checkbox" value="mobSendProf" id="specificInfoMob">Mobile
 							</label>
 							<label class="checkbox-inline">
-								<input type="checkbox" value="mailSendProf" name="specificInfo">Mailing
+								<input type="checkbox" value="mailSendProf" id="specificInfoMail">Mailing
 							</label>
 						</div>
 						<div class="checkbox">
 							<label class="checkbox-inline">
-								<input type="checkbox" value="perSendProf" name="specificInfo">Permanent Address
+								<input type="checkbox" value="perSendProf" id="specificInfoPer">Permanent Address
 							</label>
 							<label class="checkbox-inline">
-								<input type="checkbox" value="emailSendProf" name="specificInfo">Email
+								<input type="checkbox" value="emailSendProf" id="specificInfoEmail">Email
 							</label>
 							<label class="checkbox-inline">
-								<input type="checkbox" value="UidSendProf" name="specificInfo">Unique ID
+								<input type="checkbox" value="UidSendProf" id="specificInfoId">Unique ID
 							</label>
 						</div>
+					<div class="form-group">	
+						<label class="control-label" for="passToEncryptSendingData">Password:</label>
+						<input type="password" class="form-control" id="passToEncryptSendingData" placeholder="Enter a good password to encrypt your data" required>
+					</div>
 
 					<div class="form-group">
 						<label for="receiverAddr">Enter the address of the recipient</label>
 						<input type="text" class="form-control" id="receiverAddr">
 					</div>
+					
 
 					</div>
 					<div class="modal-footer">
@@ -180,18 +182,10 @@
 				  
 				</div>
 			  </div>
+	  
 
-	  <span id="smartTransHash"></span>
-      <img id="loader" src = "https://loading.io/spinners/double-ring/lg.double-ring-spineer.gif">
-      
+     <!-- Form for taking input for setting the profile--> 
       <div class="form-horizontal">
-
-	<!--<div class="form-group">
-			<label class="control-label col-sm-2" for="PuAddr">Public Address</label>
-			<div class="col-sm-10">
-				<input type="text" class="form-control" id="PuAddr" placeholder="Enter your public address" name="PuAddr">
-			</div>
-		</div>-->
 		<div class="form-group">
 				<!--<button id="sendInfo" type="button" class="btn btn-primary">Send Profile</button>-->
 				<button id="receiveInfo" type="button" class="btn btn-info" data-toggle="modal" data-target="#recievedProfileInfoModal">View Received Profile</button>
@@ -297,7 +291,9 @@
 			</div>
 		</div>
 
-	
+
+		<span id="smartTransHash"></span>
+		<img id="loader" src = "https://loading.io/spinners/double-ring/lg.double-ring-spineer.gif">
 
 		</div>
       </div>
@@ -310,11 +306,10 @@
 
 
 
-<!-- Contract scripting starts here -->
+<!-- web3 scripting starts here -->
 
 <script>
 
-	
   if (typeof web3 !== 'undefined') {
       web3 = new Web3(web3.currentProvider);
   } else {
@@ -377,24 +372,6 @@
 		"type": "event"
 	},
 	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "_to",
-				"type": "address"
-			},
-			{
-				"name": "_send",
-				"type": "bool[]"
-			}
-		],
-		"name": "sendProfile",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
 		"anonymous": false,
 		"inputs": [
 			{
@@ -410,7 +387,7 @@
 			{
 				"indexed": false,
 				"name": "dob",
-				"type": "bytes32"
+				"type": "string"
 			},
 			{
 				"indexed": false,
@@ -420,17 +397,17 @@
 			{
 				"indexed": false,
 				"name": "mobileNo",
-				"type": "bytes32"
+				"type": "string"
 			},
 			{
 				"indexed": false,
 				"name": "mailingAddress",
-				"type": "bytes32"
+				"type": "string"
 			},
 			{
 				"indexed": false,
 				"name": "permanentAddress",
-				"type": "bytes32"
+				"type": "string"
 			},
 			{
 				"indexed": false,
@@ -440,7 +417,7 @@
 			{
 				"indexed": false,
 				"name": "Uid",
-				"type": "bytes32"
+				"type": "string"
 			}
 		],
 		"name": "ProfileSetting",
@@ -467,12 +444,58 @@
 		"constant": false,
 		"inputs": [
 			{
+				"name": "_to",
+				"type": "address"
+			},
+			{
+				"name": "fullNameDec",
+				"type": "bool"
+			},
+			{
+				"name": "dobDec",
+				"type": "bool"
+			},
+			{
+				"name": "genDec",
+				"type": "bool"
+			},
+			{
+				"name": "mobDec",
+				"type": "bool"
+			},
+			{
+				"name": "mailDec",
+				"type": "bool"
+			},
+			{
+				"name": "permDec",
+				"type": "bool"
+			},
+			{
+				"name": "emailDec",
+				"type": "bool"
+			},
+			{
+				"name": "uidDec",
+				"type": "bool"
+			}
+		],
+		"name": "sendProfile",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
 				"name": "_name",
 				"type": "bytes32"
 			},
 			{
 				"name": "_dob",
-				"type": "bytes32"
+				"type": "string"
 			},
 			{
 				"name": "_gender",
@@ -480,15 +503,15 @@
 			},
 			{
 				"name": "_mobile",
-				"type": "bytes32"
+				"type": "string"
 			},
 			{
 				"name": "_mailing",
-				"type": "bytes32"
+				"type": "string"
 			},
 			{
 				"name": "_permanent",
-				"type": "bytes32"
+				"type": "string"
 			},
 			{
 				"name": "_email",
@@ -496,11 +519,11 @@
 			},
 			{
 				"name": "_Uid",
-				"type": "bytes32"
+				"type": "string"
 			},
 			{
 				"name": "_publicKey",
-				"type": "string"
+				"type": "bytes32"
 			}
 		],
 		"name": "setProfile",
@@ -521,7 +544,7 @@
 		"outputs": [
 			{
 				"name": "",
-				"type": "string"
+				"type": "bytes32"
 			}
 		],
 		"payable": false,
@@ -543,27 +566,7 @@
 			},
 			{
 				"name": "",
-				"type": "bytes32"
-			},
-			{
-				"name": "",
-				"type": "bytes32"
-			},
-			{
-				"name": "",
-				"type": "bytes32"
-			},
-			{
-				"name": "",
-				"type": "bytes32"
-			},
-			{
-				"name": "",
-				"type": "bytes32"
-			},
-			{
-				"name": "",
-				"type": "bytes32"
+				"type": "string"
 			},
 			{
 				"name": "",
@@ -572,6 +575,26 @@
 			{
 				"name": "",
 				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "bytes32"
+			},
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "bytes32"
 			}
 		],
 		"payable": false,
@@ -590,7 +613,7 @@
 		"outputs": [
 			{
 				"name": "",
-				"type": "string"
+				"type": "bytes32"
 			}
 		],
 		"payable": false,
@@ -636,7 +659,7 @@
 			},
 			{
 				"name": "dob",
-				"type": "bytes32"
+				"type": "string"
 			},
 			{
 				"name": "gender",
@@ -644,15 +667,15 @@
 			},
 			{
 				"name": "mobileNo",
-				"type": "bytes32"
+				"type": "string"
 			},
 			{
 				"name": "mailingAddress",
-				"type": "bytes32"
+				"type": "string"
 			},
 			{
 				"name": "permanentAddress",
-				"type": "bytes32"
+				"type": "string"
 			},
 			{
 				"name": "emailId",
@@ -660,7 +683,7 @@
 			},
 			{
 				"name": "Uid",
-				"type": "bytes32"
+				"type": "string"
 			}
 		],
 		"payable": false,
@@ -682,7 +705,7 @@
 			},
 			{
 				"name": "",
-				"type": "bytes32"
+				"type": "string"
 			},
 			{
 				"name": "",
@@ -690,7 +713,15 @@
 			},
 			{
 				"name": "",
-				"type": "bytes32"
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "string"
 			},
 			{
 				"name": "",
@@ -698,15 +729,7 @@
 			},
 			{
 				"name": "",
-				"type": "bytes32"
-			},
-			{
-				"name": "",
-				"type": "bytes32"
-			},
-			{
-				"name": "",
-				"type": "bytes32"
+				"type": "string"
 			}
 		],
 		"payable": false,
@@ -737,7 +760,7 @@
 			},
 			{
 				"name": "dob",
-				"type": "bytes32"
+				"type": "string"
 			},
 			{
 				"name": "gender",
@@ -745,15 +768,15 @@
 			},
 			{
 				"name": "mobileNo",
-				"type": "bytes32"
+				"type": "string"
 			},
 			{
 				"name": "mailingAddress",
-				"type": "bytes32"
+				"type": "string"
 			},
 			{
 				"name": "permanentAddress",
-				"type": "bytes32"
+				"type": "string"
 			},
 			{
 				"name": "emailId",
@@ -761,7 +784,7 @@
 			},
 			{
 				"name": "Uid",
-				"type": "bytes32"
+				"type": "string"
 			}
 		],
 		"payable": false,
@@ -770,7 +793,7 @@
 	}
 ]);
 
-  var smartID = smartIDContract.at('0x88d7adeaf7879a706cd1c91dde015af0f690759d');
+  var smartID = smartIDContract.at('0x241d1d7636614ce1043a7b68036fb9c1fa245d7d'); //Address where the contract is stored in the blockchain
   //console.log(smartID);
 
 var settingProfileEvent  = smartID.ProfileSetting({}, 'latest'); //Event for setting profile
@@ -825,7 +848,7 @@ $("#receiveInfo").click(function() {
            $('#loader').hide();
           }
 		  else{
-			$("#addrRecievedMod").html(result[0]);
+			/*$("#addrRecievedMod").html(result[0]);
 			$("#nameRecievedMod").html(web3.toAscii(result[1]));
 			$("#dobRecievedMod").html(web3.toAscii(result[2]));
 			$("#genRecievedMod").html(web3.toAscii(result[3]));
@@ -833,8 +856,17 @@ $("#receiveInfo").click(function() {
 			$("#mailRecievedMod").html(web3.toAscii(result[5]));
 			$("#permRecievedMod").html(web3.toAscii(result[6]));
 			$("#emailRecievedMod").html(web3.toAscii(result[7]));
-			$("#UniqueIdRecievedMod").html(web3.toAscii(result[8]));
+			$("#UniqueIdRecievedMod").html(web3.toAscii(result[8]));*/
 			
+			$("#addrRecievedMod").html(result[0]);
+			$("#nameRecievedMod").html(web3.toAscii(result[1]));
+			$("#dobRecievedMod").html(result[2]);
+			$("#genRecievedMod").html(web3.toAscii(result[3]));
+			$("#mobRecievedMod").html(result[4]);
+			$("#mailRecievedMod").html(result[5]);
+			$("#permRecievedMod").html(result[6]);
+			$("#emailRecievedMod").html(web3.toAscii(result[7]));
+			$("#UniqueIdRecievedMod").html(result[8]);
 		
 		  }
       });
@@ -850,36 +882,22 @@ $("#SendProfileBtn").click(function() {
 
 	var recipientAddress = $("#receiverAddr").val();
 	console.log(recipientAddress);
+	
+	console.log($("#specificInfoName").is(":checked"));
 
 // Encrypting Function call over here and return values will be passed to setProfile
-	var listOfInfoToBeSend = [];
-	var listOfBoolInfoToBeSend = new Array(false,false,false,false,false,false,false,false,false);
-	$.each($("input[name='specificInfo']:checked"), function(){            
-		listOfInfoToBeSend.push($(this).val());
-            });
-	var obj;
-			for(obj in listOfInfoToBeSend){
-				console.log(obj);
-			}
-			var info;
-			for(info in listOfInfoToBeSend){
-				if(info == "nameSendProf") listOfBoolInfoToBeSend[0] = true;
-				if(info == "dobSendProf") listOfBoolInfoToBeSend[1] = true;
-				if(info == "genSendProf") listOfBoolInfoToBeSend[2] = true;
-				if(info == "mobSendProf") listOfBoolInfoToBeSend[3] = true;
-				if(info == "mailSendProf") listOfBoolInfoToBeSend[4] = true;
-				if(info == "perSendProf") listOfBoolInfoToBeSend[5] = true;
-				if(info == "emailSendProf") listOfBoolInfoToBeSend[6] = true;
-				if(info == "UidSendProf") listOfBoolInfoToBeSend[7] = true;
+	
+			var nameDecToSend = $("#specificInfoName").is(":checked");
+			var DobDecToSend  = $("#specificInfoDob").is(":checked");
+			var GenDecToSend  = $("#specificInfoGen").is(":checked");
+			var MobDecToSend  = $("#specificInfoMob").is(":checked");
+			var MailDecToSend = $("#specificInfoMail").is(":checked");
+			var PerDecToSend  = $("#specificInfoPer").is(":checked");
+			var EmailDecToSend = $("#specificInfoEmail").is(":checked");
+			var IdDecToSend   = $("#specificInfoId").is(":checked");
 
-			}
-			var i;
-			console.log(typeof(true));
-			for(i in listOfBoolInfoToBeSend){
-				console.log(i);
-			}
 
-			smartID.sendProfile(recipientAddress, [true,true,true,true,true,true,true,true,true], (err, result) => {
+			smartID.sendProfile(recipientAddress, nameDecToSend, DobDecToSend,GenDecToSend,MobDecToSend,MailDecToSend,PerDecToSend,EmailDecToSend,IdDecToSend, (err, result) => {
 				if(err){
 					console.log("inside sending error");
 
@@ -906,7 +924,7 @@ smartID.getProfile((err, result) => {
            $('#loader').hide();
           }
 		  else{
-			$("#addrMod").html(result[0]);
+			/*$("#addrMod").html(result[0]);
 			$("#nameMod").html(web3.toAscii(result[1]));
 			$("#dobMod").html(web3.toAscii(result[2]));
 			$("#genMod").html(web3.toAscii(result[3]));
@@ -915,6 +933,17 @@ smartID.getProfile((err, result) => {
 			$("#permMod").html(web3.toAscii(result[6]));
 			$("#emailMod").html(web3.toAscii(result[7]));
 			$("#UniqueIdMod").html(web3.toAscii(result[8]));
+			$("#retPubKey").html(result[9]);*/
+
+			$("#addrMod").html(result[0]);
+			$("#nameMod").html(web3.toAscii(result[1]));
+			$("#dobMod").html(result[2]);
+			$("#genMod").html(web3.toAscii(result[3]));
+			$("#mobMod").html(result[4]);
+			$("#mailMod").html(result[5]);
+			$("#permMod").html(result[6]);
+			$("#emailMod").html(web3.toAscii((result[7])));
+			$("#UniqueIdMod").html(result[8]);
 			$("#retPubKey").html(result[9]);
 		
 		  }
@@ -943,34 +972,10 @@ smartID.getProfile((err, result) => {
       });
 	}
 	
-    //smartID.setProfile($("#name").val(), $("#dob").val(), $("#age").val(),$("#gen").val(), $("#mob").val(), $("#ipaddr").val(),$("#praddr").val(), $("#email").val());
-    /*smartID.setProfile1($("#name").val(), $("#dob").val(),(err, res) => {
-		if(err){
-            console.log(error);
-           $('#loader').hide();
-          }
-	});
-    smartID.setProfile2($("#age").val(),$("#gen").val(), $("#mob").val(),(err, res) =>{
-		if(err){	
-            console.log(error);
-           $('#loader').hide();
-          }
-	});
-    smartID.setProfile3($("#ipaddr").val(),$("#praddr").val(), $("#email").val(),(err, res) =>{
-		if(err){
-            console.log(error);
-           $('#loader').hide();
-          }
-	});*/
+    
 	
   });
-  function bin2string(array){
-	var result = "";
-	for(var i = 0; i < array.length; ++i){
-		result+= (String.fromCharCode(array[i]));
-	}
-	return result;
-}
+  
 </script>
 
 </body>

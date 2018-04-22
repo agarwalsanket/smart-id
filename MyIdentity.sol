@@ -6,17 +6,17 @@ contract MyIdentity{
     struct profileAttributes{
         address profile_owner_Address;
         bytes32 fullName;  // Kee bytes32
-        bytes32 dob;
+        string dob;
         bytes32 gender;   // Kee bytes32
-        bytes32 mobileNo; // Encryption needed
-        bytes32 mailingAddress;
-        bytes32 permanentAddress;
+        string mobileNo; // Encryption needed
+        string mailingAddress;
+        string permanentAddress;
         bytes32 emailId;
-        bytes32 Uid;
+        string Uid;
     }
     
     
-    mapping(address => string) public addrPublicKeymapping; // Storing public key based on address
+    mapping(address => bytes32) public addrPublicKeymapping; // Storing public key based on address
     mapping (address => uint256) public lastProfileIndex;
     mapping (address => mapping(uint256 => profileAttributes)) public receivedProfile;
     mapping (address => profileAttributes) public profiles;
@@ -24,7 +24,7 @@ contract MyIdentity{
     
      event ChangeNotification(address indexed sender, bytes32 notificationMsg);
     
-     event ProfileSetting(address profile_owner_Address, bytes32 fullName, bytes32 dob, bytes32 gender, bytes32 mobileNo, bytes32 mailingAddress, bytes32 permanentAddress, bytes32 emailId, bytes32 Uid);
+     event ProfileSetting(address profile_owner_Address, bytes32 fullName, string dob, bytes32 gender, string mobileNo, string mailingAddress, string permanentAddress, bytes32 emailId, string Uid);
      
      event ProfileGetting(address profile_owner_Address, bytes32 fullName, bytes32 dob, bytes32 age, bytes32 gender, bytes32 mobileNo, bytes32 mailingAddress, bytes32 permanentAddress, bytes32 emailId);
     
@@ -78,14 +78,14 @@ contract MyIdentity{
      function setProfile
     (
         bytes32 _name, 
-        bytes32 _dob,
+        string _dob,
         bytes32 _gender,
-        bytes32 _mobile,
-        bytes32 _mailing,
-        bytes32 _permanent,
+        string _mobile,
+        string _mailing,
+        string _permanent,
         bytes32 _email,
-        bytes32 _Uid,
-        string _publicKey
+        string _Uid,
+        bytes32 _publicKey
         ) {
         profiles[msg.sender].profile_owner_Address = msg.sender;
         profiles[msg.sender].fullName = _name;
@@ -123,14 +123,14 @@ contract MyIdentity{
     function getProfile() public constant returns
     (   address,
         bytes32, 
+        string,
         bytes32,
+        string,
+        string,
+        string,
         bytes32,
-        bytes32,
-        bytes32,
-        bytes32,
-        bytes32,
-        bytes32,
-        string 
+        string,
+        bytes32 
         ){
         return
         (
@@ -152,13 +152,13 @@ contract MyIdentity{
     for an account.
     Input agr: The address of that account
     */
-    function getPublicKey(address accountAddress) public constant returns (string){
+    function getPublicKey(address accountAddress) public constant returns (bytes32){
         return addrPublicKeymapping[accountAddress];
     }
     
     
     
-    function sendProfile(address _to, bool[] _send){
+    /*function sendProfile(address _to, bool[] _send){
         if(_send[0]){ receivedProfile[_to][lastProfileIndex[_to]].fullName = profiles[msg.sender].fullName; }
         if(_send[1]){ receivedProfile[_to][lastProfileIndex[_to]].dob = profiles[msg.sender].dob; }
         if(_send[2]){ receivedProfile[_to][lastProfileIndex[_to]].gender = profiles[msg.sender].gender; }
@@ -167,6 +167,21 @@ contract MyIdentity{
         if(_send[5]){ receivedProfile[_to][lastProfileIndex[_to]].permanentAddress = profiles[msg.sender].permanentAddress; }
         if(_send[6]){ receivedProfile[_to][lastProfileIndex[_to]].emailId = profiles[msg.sender].emailId; }
         if(_send[7]){ receivedProfile[_to][lastProfileIndex[_to]].Uid = profiles[msg.sender].Uid; }
+        
+        
+        lastProfileIndex[_to]++;
+        //sendEvent("Profile sent!");
+    }*/
+    
+    function sendProfile(address _to, bool fullNameDec, bool dobDec, bool genDec, bool mobDec, bool mailDec, bool permDec, bool emailDec, bool uidDec){
+        if(fullNameDec){ receivedProfile[_to][lastProfileIndex[_to]].fullName = profiles[msg.sender].fullName; }
+        if(dobDec){ receivedProfile[_to][lastProfileIndex[_to]].dob = profiles[msg.sender].dob; }
+        if(genDec){ receivedProfile[_to][lastProfileIndex[_to]].gender = profiles[msg.sender].gender; }
+        if(mobDec){ receivedProfile[_to][lastProfileIndex[_to]].mobileNo = profiles[msg.sender].mobileNo; }
+        if(mailDec){ receivedProfile[_to][lastProfileIndex[_to]].mailingAddress = profiles[msg.sender].mailingAddress; }
+        if(permDec){ receivedProfile[_to][lastProfileIndex[_to]].permanentAddress = profiles[msg.sender].permanentAddress; }
+        if(emailDec){ receivedProfile[_to][lastProfileIndex[_to]].emailId = profiles[msg.sender].emailId; }
+        if(uidDec){ receivedProfile[_to][lastProfileIndex[_to]].Uid = profiles[msg.sender].Uid; }
         
         
         lastProfileIndex[_to]++;
@@ -205,13 +220,13 @@ contract MyIdentity{
     function readReceivedProfile() constant returns
     (   address,
         bytes32,
+        string,
         bytes32,
+        string,
+        string,
+        string,
         bytes32,
-        bytes32,
-        bytes32,
-        bytes32,
-        bytes32,
-        bytes32
+        string
         ) {
             return(msg.sender,
                     receivedProfile[msg.sender][lastProfileIndex[msg.sender]-1].fullName,
