@@ -17,6 +17,38 @@
 
   <div class="jumbotron">
 
+	<!-- Modal content for validating password-->
+	<div class="modal fade" id="RecievedProfilePasswordTakerModal" role="dialog">
+			<div class="modal-dialog modal-lg">
+			  <div class="modal-content">
+				<div class="modal-header">
+				  <button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body" >
+						
+						<label class="control-label col-sm-2" for="recievedProfilePwd">Private key:</label>
+					<div class="col-sm-10">
+						<input type="password" class="form-control" id="recievedProfilePwd" placeholder="Enter your private key to view the recieved profile" required>
+					</div>
+					<p class="text-info" align="center">If you want to view the received profile, only then press view</p>
+					
+				</div>
+				<div class="modal-footer">
+						<div class="btn-group btn-group-justified">
+								<div class="btn-group">
+									  <button id="recievedProfViewBtn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#recievedProfileInfoModal">View Received Profile</button>
+								</div>
+								<div class="btn-group">
+									  <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+								</div>
+						</div>
+				  
+				</div>
+			  </div>
+			  
+			</div>
+		  </div>
+
 
 	<!-- Modal content for received profile-->
 
@@ -30,15 +62,14 @@
 				  <h4 class="modal-title">Recieved Profile</h4>
 				</div>
 				<div class="modal-body">
+						
 				<ul class="list-group">
 					<li class="list-group-item">Address: <span id="addrRecievedMod" ></span></li>
 					<li class="list-group-item">Name: <span id="nameRecievedMod" ></span></li> 
 					<li class="list-group-item">DOB: <span id="dobRecievedMod"></span></li> 
-					<li class="list-group-item">Public key: <textarea class="form-control" rows="5" id="retRecievedPubKey"></textarea></li>
 					<li class="list-group-item">Gender: <span id="genRecievedMod"></span></li> 
 					<li class="list-group-item">Mobile: <span id="mobRecievedMod"></span></li> 
 					<li class="list-group-item">Mailing: <span id="mailRecievedMod"></span></li>
-					<li class="list-group-item">Permanent Address: <span id="permRecievedMod"></span></li> 
 					<li class="list-group-item">Email: <span id="emailRecievedMod"></span></li> 
 					<li class="list-group-item">Unique ID: <span id="UniqueIdRecievedMod"></span></li> 
 					<!--<li class="list-group-item">Unique ID: <span id="idMod"></span></li> -->
@@ -95,6 +126,7 @@
 				  <h4 class="modal-title">Saved Profile</h4>
 				</div>
 				<div class="modal-body">
+					<p id="tet"></p>
 				<ul class="list-group">
 					<li class="list-group-item">Address: <span id="addrMod" ></span></li>
 					<li class="list-group-item">Name: <span id="nameMod" ></span></li> 
@@ -103,7 +135,6 @@
 					<li class="list-group-item">Gender: <span id="genMod"></span></li> 
 					<li class="list-group-item">Mobile: <span id="mobMod"></span></li> 
 					<li class="list-group-item">Mailing: <span id="mailMod"></span></li>
-					<li class="list-group-item">Permanent Address: <span id="permMod"></span></li> 
 					<li class="list-group-item">Email: <span id="emailMod"></span></li> 
 					<li class="list-group-item">Unique ID: <span id="UniqueIdMod"></span></li> 
 					<!--<li class="list-group-item">Unique ID: <span id="idMod"></span></li> -->
@@ -121,7 +152,7 @@
 		  <!-- Logic for sending information-->
 		  <div class="modal fade" id="sendingInfoModal" role="dialog">
 				<div class="modal-dialog">
-				
+						
 				  <!-- Modal content-->
 				  <div class="modal-content">
 					<div class="modal-header">
@@ -137,31 +168,33 @@
 								<input type="checkbox" value="dobSendProf" id="specificInfoDob">DOB
 							</label>
 							<label class="checkbox-inline">
-								<input type="checkbox" value="ageSendProf" id="specificInfoAge">Age
-							</label>
+									<input type="checkbox" value="genSendProf" id="specificInfoGen">Gender
+								</label>
 						</div>
 						<div class="checkbox">
-							<label class="checkbox-inline">
-								<input type="checkbox" value="genSendProf" id="specificInfoGen">Gender
-							</label>
+							
 							<label class="checkbox-inline">
 								<input type="checkbox" value="mobSendProf" id="specificInfoMob">Mobile
 							</label>
 							<label class="checkbox-inline">
 								<input type="checkbox" value="mailSendProf" id="specificInfoMail">Mailing
 							</label>
+
+							<label class="checkbox-inline">
+									<input type="checkbox" value="emailSendProf" id="specificInfoEmail">Email
+								</label>
 						</div>
 						<div class="checkbox">
-							<label class="checkbox-inline">
-								<input type="checkbox" value="perSendProf" id="specificInfoPer">Permanent Address
-							</label>
-							<label class="checkbox-inline">
-								<input type="checkbox" value="emailSendProf" id="specificInfoEmail">Email
-							</label>
+							
 							<label class="checkbox-inline">
 								<input type="checkbox" value="UidSendProf" id="specificInfoId">Unique ID
 							</label>
 						</div>
+
+					<div class="form-group">	
+							<label class="control-label" for="passTogetEncryptedData">Get Profile Password:</label>
+							<input type="password" class="form-control" id="passTogetEncryptedData" placeholder="Enter the password to get the data" required>
+					</div>
 					<div class="form-group">	
 						<label class="control-label" for="passToEncryptSendingData">Password:</label>
 						<input type="password" class="form-control" id="passToEncryptSendingData" placeholder="Enter a good password to encrypt your data" required>
@@ -188,7 +221,7 @@
       <div class="form-horizontal">
 		<div class="form-group">
 				<!--<button id="sendInfo" type="button" class="btn btn-primary">Send Profile</button>-->
-				<button id="receiveInfo" type="button" class="btn btn-info" data-toggle="modal" data-target="#recievedProfileInfoModal">View Received Profile</button>
+				<button id="receiveInfo" type="button" class="btn btn-info" data-toggle="modal" data-target="#RecievedProfilePasswordTakerModal">View Received Profile</button>
 		  </div>
 
         <div class="form-group">
@@ -220,7 +253,7 @@
         <div class="form-group">
             <label class="control-label col-sm-2" for="mob">Mobile</label>
             <div class="col-sm-10">
-              <input type="number" class="form-control" id="mob" placeholder="Enter Mobile number" name="mob">
+              <input type="text" class="form-control" id="mob" placeholder="Enter Mobile number" name="mob">
             </div>
         </div>
 
@@ -230,16 +263,9 @@
               <input type="text" class="form-control" id="ipaddr" placeholder="Apartment, area, zip" name="ipaddr">
           </div>
         </div>
-        
-        <div class="form-group">
-            <label class="control-label col-sm-2" for="praddr">Permanent Address</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="praddr" placeholder="Apartment, area, zip" name="praddr">
-          </div>
-        </div>
 
         <div class="form-group">
-            <label class="control-label col-sm-2" for="Uid">GUID</label>
+            <label class="control-label col-sm-2" for="Uid">License</label>
             <div class="col-sm-10">
               <input type="text" class="form-control" id="Uid" placeholder="Enter your unique ID" name="Uid">
           </div>
@@ -303,8 +329,8 @@
 </div>
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-
-
+<script src="./node_modules/crypto-js/crypto-js.js"></script>
+<script src="./node_modules/jsencrypt/bin/jsencrypt.min.js"> </script>
 
 <!-- web3 scripting starts here -->
 
@@ -335,17 +361,12 @@
 			{
 				"indexed": false,
 				"name": "dob",
-				"type": "bytes32"
-			},
-			{
-				"indexed": false,
-				"name": "age",
-				"type": "bytes32"
+				"type": "bytes16"
 			},
 			{
 				"indexed": false,
 				"name": "gender",
-				"type": "bytes32"
+				"type": "bytes16"
 			},
 			{
 				"indexed": false,
@@ -355,11 +376,6 @@
 			{
 				"indexed": false,
 				"name": "mailingAddress",
-				"type": "bytes32"
-			},
-			{
-				"indexed": false,
-				"name": "permanentAddress",
 				"type": "bytes32"
 			},
 			{
@@ -387,12 +403,12 @@
 			{
 				"indexed": false,
 				"name": "dob",
-				"type": "string"
+				"type": "bytes16"
 			},
 			{
 				"indexed": false,
 				"name": "gender",
-				"type": "bytes32"
+				"type": "bytes16"
 			},
 			{
 				"indexed": false,
@@ -402,11 +418,6 @@
 			{
 				"indexed": false,
 				"name": "mailingAddress",
-				"type": "string"
-			},
-			{
-				"indexed": false,
-				"name": "permanentAddress",
 				"type": "string"
 			},
 			{
@@ -448,36 +459,36 @@
 				"type": "address"
 			},
 			{
-				"name": "fullNameDec",
-				"type": "bool"
+				"name": "_name",
+				"type": "bytes32"
 			},
 			{
-				"name": "dobDec",
-				"type": "bool"
+				"name": "_dob",
+				"type": "bytes16"
 			},
 			{
-				"name": "genDec",
-				"type": "bool"
+				"name": "_gender",
+				"type": "bytes16"
 			},
 			{
-				"name": "mobDec",
-				"type": "bool"
+				"name": "_mobile",
+				"type": "string"
 			},
 			{
-				"name": "mailDec",
-				"type": "bool"
+				"name": "_mailing",
+				"type": "string"
 			},
 			{
-				"name": "permDec",
-				"type": "bool"
+				"name": "_email",
+				"type": "bytes32"
 			},
 			{
-				"name": "emailDec",
-				"type": "bool"
+				"name": "_Uid",
+				"type": "string"
 			},
 			{
-				"name": "uidDec",
-				"type": "bool"
+				"name": "_passKey",
+				"type": "string"
 			}
 		],
 		"name": "sendProfile",
@@ -495,11 +506,11 @@
 			},
 			{
 				"name": "_dob",
-				"type": "string"
+				"type": "bytes16"
 			},
 			{
 				"name": "_gender",
-				"type": "bytes32"
+				"type": "bytes16"
 			},
 			{
 				"name": "_mobile",
@@ -507,10 +518,6 @@
 			},
 			{
 				"name": "_mailing",
-				"type": "string"
-			},
-			{
-				"name": "_permanent",
 				"type": "string"
 			},
 			{
@@ -523,7 +530,7 @@
 			},
 			{
 				"name": "_publicKey",
-				"type": "bytes32"
+				"type": "string"
 			}
 		],
 		"name": "setProfile",
@@ -544,7 +551,7 @@
 		"outputs": [
 			{
 				"name": "",
-				"type": "bytes32"
+				"type": "string"
 			}
 		],
 		"payable": false,
@@ -566,15 +573,11 @@
 			},
 			{
 				"name": "",
-				"type": "string"
+				"type": "bytes16"
 			},
 			{
 				"name": "",
-				"type": "bytes32"
-			},
-			{
-				"name": "",
-				"type": "string"
+				"type": "bytes16"
 			},
 			{
 				"name": "",
@@ -594,7 +597,7 @@
 			},
 			{
 				"name": "",
-				"type": "bytes32"
+				"type": "string"
 			}
 		],
 		"payable": false,
@@ -613,7 +616,7 @@
 		"outputs": [
 			{
 				"name": "",
-				"type": "bytes32"
+				"type": "string"
 			}
 		],
 		"payable": false,
@@ -659,11 +662,11 @@
 			},
 			{
 				"name": "dob",
-				"type": "string"
+				"type": "bytes16"
 			},
 			{
 				"name": "gender",
-				"type": "bytes32"
+				"type": "bytes16"
 			},
 			{
 				"name": "mobileNo",
@@ -674,15 +677,15 @@
 				"type": "string"
 			},
 			{
-				"name": "permanentAddress",
-				"type": "string"
-			},
-			{
 				"name": "emailId",
 				"type": "bytes32"
 			},
 			{
 				"name": "Uid",
+				"type": "string"
+			},
+			{
+				"name": "passkey",
 				"type": "string"
 			}
 		],
@@ -705,7 +708,7 @@
 			},
 			{
 				"name": "",
-				"type": "string"
+				"type": "bytes16"
 			},
 			{
 				"name": "",
@@ -721,11 +724,11 @@
 			},
 			{
 				"name": "",
-				"type": "string"
+				"type": "bytes32"
 			},
 			{
 				"name": "",
-				"type": "bytes32"
+				"type": "string"
 			},
 			{
 				"name": "",
@@ -760,11 +763,11 @@
 			},
 			{
 				"name": "dob",
-				"type": "string"
+				"type": "bytes16"
 			},
 			{
 				"name": "gender",
-				"type": "bytes32"
+				"type": "bytes16"
 			},
 			{
 				"name": "mobileNo",
@@ -775,15 +778,15 @@
 				"type": "string"
 			},
 			{
-				"name": "permanentAddress",
-				"type": "string"
-			},
-			{
 				"name": "emailId",
 				"type": "bytes32"
 			},
 			{
 				"name": "Uid",
+				"type": "string"
+			},
+			{
+				"name": "passkey",
 				"type": "string"
 			}
 		],
@@ -793,7 +796,7 @@
 	}
 ]);
 
-  var smartID = smartIDContract.at('0x241d1d7636614ce1043a7b68036fb9c1fa245d7d'); //Address where the contract is stored in the blockchain
+  var smartID = smartIDContract.at('0x0c901c4a2504a5ded584cfa02b9fa899623ccb4d'); //Address where the contract is stored in the blockchain
   //console.log(smartID);
 
 var settingProfileEvent  = smartID.ProfileSetting({}, 'latest'); //Event for setting profile
@@ -836,37 +839,49 @@ settingProfileEvent.watch(function(error, result){
 
 // Receiving Profile info
 // Sending the profile information
-$("#receiveInfo").click(function() {
+$("#recievedProfViewBtn").click(function() {
     console.log("hello from button recieved");
 
 	var recipientAddress = $("#receiverAddr").val();
+	var privateKeyOfReciever = $("#recievedProfilePwd").val();  // private key of reciever
+	var mobDecryptedValForReciever = "";
+	var mailDecryptedValForReciever = "";
+	var idDecryptedValForReciever   = "";
+	var passKeyDecrypted = "";
 
+console.log("hello from button recieved1");
 
 	smartID.readReceivedProfile((err, result) => {
           if(err){
             console.log(error);
-           $('#loader').hide();
+			console.log("hello from button recieved2");
           }
 		  else{
-			/*$("#addrRecievedMod").html(result[0]);
-			$("#nameRecievedMod").html(web3.toAscii(result[1]));
-			$("#dobRecievedMod").html(web3.toAscii(result[2]));
-			$("#genRecievedMod").html(web3.toAscii(result[3]));
-			$("#mobRecievedMod").html(web3.toAscii(result[4]));
-			$("#mailRecievedMod").html(web3.toAscii(result[5]));
-			$("#permRecievedMod").html(web3.toAscii(result[6]));
-			$("#emailRecievedMod").html(web3.toAscii(result[7]));
-			$("#UniqueIdRecievedMod").html(web3.toAscii(result[8]));*/
+			console.log("hello from button recieved3");
+			passKeyDecrypted = assymetricRSADecryption(result[8],privateKeyOfReciever);
+			console.log("hello from button recieved4"+result[8]);
 			
+			var decForGoingAhead = typeof(passKeyDecrypted);
+			console.log(passKeyDecrypted);
+			if(decForGoingAhead != false){
+				mobDecryptedValForReciever = symmetricDecryption(result[4], passKeyDecrypted);
+			console.log("hello from button recieved5");
+			mailDecryptedValForReciever = symmetricDecryption(result[5], passKeyDecrypted);
+			idDecryptedValForReciever = symmetricDecryption(result[7], passKeyDecrypted);
+
+			console.log("hello from button recieved5");
+			console.log("hello "+mobDecryptedValForReciever);
 			$("#addrRecievedMod").html(result[0]);
 			$("#nameRecievedMod").html(web3.toAscii(result[1]));
-			$("#dobRecievedMod").html(result[2]);
+			$("#dobRecievedMod").html(web3.toAscii(result[2]));	
 			$("#genRecievedMod").html(web3.toAscii(result[3]));
-			$("#mobRecievedMod").html(result[4]);
-			$("#mailRecievedMod").html(result[5]);
-			$("#permRecievedMod").html(result[6]);
-			$("#emailRecievedMod").html(web3.toAscii(result[7]));
-			$("#UniqueIdRecievedMod").html(result[8]);
+			$("#mobRecievedMod").html(mobDecryptedValForReciever);
+			$("#mailRecievedMod").html(mailDecryptedValForReciever);
+			$("#emailRecievedMod").html(web3.toAscii(result[6]));
+			$("#UniqueIdRecievedMod").html(idDecryptedValForReciever);
+			}
+			
+			
 		
 		  }
       });
@@ -880,31 +895,101 @@ $("#receiveInfo").click(function() {
 $("#SendProfileBtn").click(function() {
     console.log("hello from button sender");
 
-	var recipientAddress = $("#receiverAddr").val();
-	console.log(recipientAddress);
-	
-	console.log($("#specificInfoName").is(":checked"));
 
-// Encrypting Function call over here and return values will be passed to setProfile
+	var recipientAddress = $("#receiverAddr").val();
+	var passKeyToGetEncryptedData =  $("#passTogetEncryptedData").val();
+
+	/* This Passkey will be used to encrypt the sending data and then be encrypted using receiver's public key
+	. So that the passkey remains secure. In the reciever's side the reciever will first decrypt the passkey using
+	his private key and then use the decrypted passkey to decrypt the data recieved.
+	*/
+	var passKeyToEncryptSendingData = $("#passToEncryptSendingData").val(); 
+	var passKeyEncryptedUsingRecieversPubKey = "";  //encrypted the passkey using reciever's pub. key
+	var mobDecryptedForSendining = "";
+	var mailDecryptedForSendining = "";
+	var idDecryptedForSendining = "";
+
 	
-			var nameDecToSend = $("#specificInfoName").is(":checked");
+	var nameSending = "";
+	var dobSending = "";
+	var genSending = "";
+	var emailSending = "";
+	var mobSending = "";
+	var mailSending = "";
+	var idSending = "";
+
+	smartID.getProfile((err, result) => {
+          if(err){
+            console.log(error);
+          }
+		  else{
+			 mobDecryptedForSendining = symmetricDecryption(result[4],passKeyToGetEncryptedData);
+			 mailDecryptedForSendining = symmetricDecryption(result[5],passKeyToGetEncryptedData);
+			 idDecryptedForSendining = symmetricDecryption(result[7],passKeyToGetEncryptedData);
+
+			 var nameDecToSend = $("#specificInfoName").is(":checked");
 			var DobDecToSend  = $("#specificInfoDob").is(":checked");
 			var GenDecToSend  = $("#specificInfoGen").is(":checked");
 			var MobDecToSend  = $("#specificInfoMob").is(":checked");
 			var MailDecToSend = $("#specificInfoMail").is(":checked");
-			var PerDecToSend  = $("#specificInfoPer").is(":checked");
 			var EmailDecToSend = $("#specificInfoEmail").is(":checked");
 			var IdDecToSend   = $("#specificInfoId").is(":checked");
 
+			if(nameDecToSend){
+				nameSending = web3.toAscii(result[1]);
+			}
+			if(DobDecToSend){
+				dobSending = web3.toAscii(result[2]);
+			}
+			if(GenDecToSend){
+				genSending = web3.toAscii(result[3]);
+			}
+			if(MobDecToSend){
+				mobSending = symmetricEncryption(mobDecryptedForSendining,passKeyToEncryptSendingData);
+			}
+			if(MailDecToSend){
+				mailSending = symmetricEncryption(mailDecryptedForSendining,passKeyToEncryptSendingData);
+			}
+			if(EmailDecToSend){
+				emailSending = web3.toAscii(result[6]);
+			}
+			if(IdDecToSend){
+				idSending = symmetricEncryption(idDecryptedForSendining,passKeyToEncryptSendingData);
+			}
+			
+			//getting the reciver's public key
+			var RecieversPubKey = "";
 
-			smartID.sendProfile(recipientAddress, nameDecToSend, DobDecToSend,GenDecToSend,MobDecToSend,MailDecToSend,PerDecToSend,EmailDecToSend,IdDecToSend, (err, result) => {
+			smartID.getPublicKey(recipientAddress,(err,res) => {
 				if(err){
-					console.log("inside sending error");
-
             console.log(error);
-           $('#loader').hide();}  
+          }
+		  else{
+			RecieversPubKey = res;
+		  }
 			});
 
+	passKeyEncryptedUsingRecieversPubKey = assymetricRSAEncryption(passKeyToEncryptSendingData, RecieversPubKey);
+
+				smartID.sendProfile(
+				recipientAddress, 
+				nameSending, 
+				dobSending,
+				genSending,
+				mobSending,
+				mailSending,
+				emailSending,
+				idSending, 
+				passKeyEncryptedUsingRecieversPubKey,
+				(err, result) => {
+							if(err){
+								console.log("inside sending error");
+
+						console.log(error);
+					}  
+						});
+					}
+				});
 			console.log("Sending is done");
 
 	//$('#loader').show();
@@ -913,7 +998,6 @@ $("#SendProfileBtn").click(function() {
 // Getting the profile information
 $("#viewFromModalBtn").click(function() {
     console.log("hello from button getter");
-	console.log("mom");
 	console.log($("#ViewingInfoValPwd").val());
 	
 	var passwordForDecrypting = $("#ViewingInfoValPwd").val();
@@ -924,32 +1008,24 @@ smartID.getProfile((err, result) => {
            $('#loader').hide();
           }
 		  else{
-			/*$("#addrMod").html(result[0]);
-			$("#nameMod").html(web3.toAscii(result[1]));
-			$("#dobMod").html(web3.toAscii(result[2]));
-			$("#genMod").html(web3.toAscii(result[3]));
-			$("#mobMod").html(web3.toAscii(result[4]));
-			$("#mailMod").html(web3.toAscii(result[5]));
-			$("#permMod").html(web3.toAscii(result[6]));
-			$("#emailMod").html(web3.toAscii(result[7]));
-			$("#UniqueIdMod").html(web3.toAscii(result[8]));
-			$("#retPubKey").html(result[9]);*/
+			var viewDecryptPass = $("#ViewingInfoValPwd").val();
+			var mobDecrypted = symmetricDecryption(result[4],viewDecryptPass);
+			var mailDecrypted = symmetricDecryption(result[5],viewDecryptPass);
+			var idDecrypted = symmetricDecryption(result[7],viewDecryptPass);
+
 
 			$("#addrMod").html(result[0]);
 			$("#nameMod").html(web3.toAscii(result[1]));
-			$("#dobMod").html(result[2]);
+			$("#dobMod").html(web3.toAscii(result[2]));
 			$("#genMod").html(web3.toAscii(result[3]));
-			$("#mobMod").html(result[4]);
-			$("#mailMod").html(result[5]);
-			$("#permMod").html(result[6]);
-			$("#emailMod").html(web3.toAscii((result[7])));
-			$("#UniqueIdMod").html(result[8]);
-			$("#retPubKey").html(result[9]);
+			$("#mobMod").html(mobDecrypted);
+			$("#mailMod").html(mailDecrypted);
+			$("#emailMod").html(web3.toAscii((result[6])));
+			$("#UniqueIdMod").html(idDecrypted);
+			$("#retPubKey").html(result[8]);
 		
 		  }
       });
-
-	
 	//$('#loader').show();
   });
 
@@ -957,11 +1033,18 @@ smartID.getProfile((err, result) => {
 	console.log("hello from button setter");
 	var password = $("#PwdEntry").val();
 	var confirm_password = $("#ConfirmPwd").val();
+
 	if(password != confirm_password){
 		$("#PasswordValidationMsg").html("Passwords do not match!");
-	}else{
+	}else{	
 			// Encrypting Function call over here and return values will be passed to setProfile
-			smartID.setProfile($("#name").val(), $("#dob").val(), $('input[name=gender]:checked').val(), $("#mob").val(), $("#ipaddr").val(),$("#praddr").val(), $("#email").val(),$("#Uid").val(),$("#PublicKey").val(), (err, res) => {
+			//Encrypting imp. info.
+			var MobNoEncrypted = symmetricEncryption($("#mob").val(),password);
+			var mailEncrypted = symmetricEncryption( $("#ipaddr").val(),password);
+			var uidEncrypted = symmetricEncryption($("#Uid").val(),password);
+			
+			
+			smartID.setProfile($("#name").val(), $("#dob").val(), $('input[name=gender]:checked').val(), MobNoEncrypted, mailEncrypted, $("#email").val(),uidEncrypted,$("#PublicKey").val(), (err, res) => {
           if(err){
             console.log(error);
            $('#loader').hide();
@@ -975,6 +1058,58 @@ smartID.getProfile((err, result) => {
     
 	
   });
+
+
+  /*
+    Symmetric Encryption function
+    We use AES(Advanced Encryption Standard) encryption to encrypt the data.
+    @parameters : data to be ecrypted, key to decrypt
+    @return : string of encrypted data
+*/
+function symmetricEncryption(data, key) {
+  var encryptedData = CryptoJS.AES.encrypt(data, key);
+  var encryptedDataString = encryptedData.toString();
+  return encryptedDataString;
+}
+
+/*
+    Symmetric Decryption function
+    We use AES(Advanced Encryption Standard) decryption to decrypt the data.
+    @parameters : encrypted data to be decrypted, key to decrypt
+    @return : plain text of decrypted data
+*/
+function symmetricDecryption(data, key) {
+  var decryptedData = CryptoJS.AES.decrypt(data, key);
+  var decryptedDataString = decryptedData.toString(CryptoJS.enc.Utf8);
+  return decryptedDataString;
+}
+
+/*
+    RSA assymetric encryption function
+    @parameters : encrypted data to be decrypted, key to decrypt
+    @return : string of encrypted data
+*/
+function assymetricRSAEncryption(data, publicKey) {
+  var encrypt = new JSEncrypt();
+  encrypt.setPublicKey(publicKey);
+  var RSAencryptedData = encrypt.encrypt(data);
+  return RSAencryptedData;
+}
+
+/*
+    RSA assymmetric decryption function
+    @parameters : encrypted data to be decrypted, key to decrypt
+    @return : plain text of decrypted data
+*/
+function assymetricRSADecryption(encrypted, privateKey) {
+  var decrypt = new JSEncrypt();
+  decrypt.setPrivateKey(privateKey);
+  var RSAdecryptedData = decrypt.decrypt(encrypted);
+  return RSAdecryptedData;
+}
+
+
+
   
 </script>
 
