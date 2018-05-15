@@ -1,5 +1,5 @@
 # smart-id
-A decentralized application (D-APP) to store and share digital information in a secured manner
+A Decentralized Application (D-APP) to store and share digital information in a secured manner
 
 > Used Solidity language for building the smart contract
 > Used HTML, CSS, Javascript for buiding the front end 
