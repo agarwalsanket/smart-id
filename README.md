@@ -9,3 +9,4 @@ A Decentralized Application (D-APP) to store and share digital information in a 
 
 > Used web3.js library for making the communication between the smart contract and the front-end 
 
+> Used Aymmetric and Asymmetric encryption
